@@ -7,10 +7,10 @@ export default function MyEditor() {
 
   return (
     <div style={{ maxWidth: "800px", margin: "20px auto" }}>
-      <h2>Simple CKEditor</h2>
+     
       <CKEditor
         editor={ClassicEditor}
-        data="<p>Type something...</p>"
+        data="<p></p>"
         onChange={(event, editor) => {
           const newData = editor.getData();
           setData(newData);
