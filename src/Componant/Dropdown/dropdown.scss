@@ -1,0 +1,44 @@
+.main-menu {
+  background: #fff;
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: var(--shadow);
+  font-weight: 500;
+}
+
+.main-menu .icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.main-menu .icon svg {
+  font-size: 22px;
+}
+
+.menu-list {
+  background: #fff;
+  width: 100%;
+  margin-top: 2px;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+}
+
+.menu-list .menu-one {
+  padding: 10px;
+  transition: var(--trans);
+  cursor: pointer;
+  text-decoration: none;
+  color: var(--black);
+}
+
+.menu-list .menu-one:hover {
+  background: var(--accent);
+  border-radius: 5px;
+  color: var(--white);
+}

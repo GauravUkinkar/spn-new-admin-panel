@@ -1,0 +1,63 @@
+.sidebar-parent {
+  width: 15%;
+  background: rgb(239, 242, 255);
+  height: 100vh;
+  padding: 20px 10px;
+  border-radius: 10px 0px 0px 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 20px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  .main-box {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    .logo {
+      a {
+        font-size: 40px;
+        text-decoration: none;
+        color: var(--accent);
+      }
+    }
+    .menu-box {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      justify-content: flex-start;
+      align-items: flex-start;
+      .contact {
+        width: 100%;
+        padding: 10px;
+        background: var(--white);
+        border-radius: 5px;
+        display: flex;
+        box-shadow: var(--shadow);
+        transition: var(--trans);
+        color:black;
+        text-decoration: none;
+        &:hover{
+            background: var(--accent);
+            color: var(--white);
+        }
+      }
+    }
+  }
+  // LOGOUT BTN CSS
+  .logout {
+    background: white;
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    box-shadow: var(--shadow);
+    transition: var(--trans);
+    &:hover {
+      background: var(--accent);
+      color: var(--white);
+    }
+  }
+}
