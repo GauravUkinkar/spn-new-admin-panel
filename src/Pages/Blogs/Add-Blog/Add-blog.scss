@@ -54,6 +54,23 @@
           width: 100%;
           .input-group {
             width: 100%;
+            select{
+              padding:10px;
+              border: 1px solid #ccc;
+              border-radius: 5px;
+              
+              option{
+                background:var(--accent);
+                color:var(--white);
+                transition: var(--trans);
+                border-radius: 10px;;
+                &:hover{
+                  background:var(--white);
+                  color:var(--accent);
+                }
+
+              }
+            }
           }
         }
         .btn {

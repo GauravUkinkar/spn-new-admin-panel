@@ -1,27 +1,19 @@
-import React, { useState } from "react";
+import React from "react";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
-export default function MyEditor() {
-  const [data, setData] = useState("");
-
+export default function MyEditor({ value, onChange }) {
   return (
-    <div style={{ maxWidth: "800px", margin: "20px auto" }}>
-     
+    <div
+      style={{ maxWidth: "800px", margin: "20px auto", borderRadius: "10px" }}
+    >
       <CKEditor
         editor={ClassicEditor}
-        data="<p></p>"
+        data={value}
         onChange={(event, editor) => {
-          const newData = editor.getData();
-          setData(newData);
+          onChange(editor.getData());
         }}
       />
-      <div
-        style={{ marginTop: "20px", padding: "10px", border: "1px solid #ddd" }}
-      >
-        <h3>Preview:</h3>
-        <div dangerouslySetInnerHTML={{ __html: data }} />
-      </div>
     </div>
   );
 }
