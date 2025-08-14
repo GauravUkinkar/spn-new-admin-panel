@@ -17,24 +17,26 @@ const Add_Blog = () => {
               </div>
 
               <MyEditor />
-              <div className="input-group">
-                <label>Select Image</label>
-                <input type="file"></input>
-              </div>
-              <div className="input-group">
-                <label>Select Date</label>
-                <input type="date"></input>
-              </div>
-              <div className="input-group">
-                <label for="language">Select Language</label>
-                <select id="language" name="language">
-                  <option value="">Select</option>
-                  <option value="english">English</option>
-                  <option value="marathi">Marathi</option>
-                </select>
+              <div className="main-group">
+                <div className="input-group">
+                  <label>Select Image</label>
+                  <input type="file"></input>
+                </div>
+                <div className="input-group">
+                  <label>Select Date</label>
+                  <input type="date"></input>
+                </div>
+                <div className="input-group">
+                  <label for="language">Select Language</label>
+                  <select id="language" name="language">
+                    <option value="">Select</option>
+                    <option value="english">English</option>
+                    <option value="marathi">Marathi</option>
+                  </select>
+                </div>
               </div>
 
-              <button type="submit">Submit Blog-</button>
+              <button className="btn" type="submit">Submit Blog</button>
             </form>
           </div>
           <div className="right-side">
