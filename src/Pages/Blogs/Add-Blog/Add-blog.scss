@@ -5,9 +5,38 @@
   .add-blog-container {
     border: 1px solid green;
     width: 100%;
+
     padding: 100px 20px;
     display: flex;
     align-items: center;
     flex-direction: column;
+    gap: 40px;
+    background: rgba(255, 255, 255, 0.185);
+    h3 {
+      font-size: 30px;
+    }
+    .blog-temp {
+      display: flex;
+      width: 100%;
+      .left-side {
+        width: 50%;
+        display: flex;
+        flex-direction: column;
+        border: 1px solid red;
+        padding: 10px;
+        gap: 10px;
+        .input-group {
+          display: flex;
+          flex-direction: column;
+        }
+      }
+      .right-side {
+        width: 50%;
+        display: flex;
+        flex-direction: column;
+        border: 1px solid red;
+        padding: 10px;
+      }
+    }
   }
 }
