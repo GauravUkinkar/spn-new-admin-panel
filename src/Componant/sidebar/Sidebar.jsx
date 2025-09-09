@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import "./Sidebar.scss";
-import { Link } from "react-router-dom";
-import Dropdown from "../dropdown/Dropdown";
+import { Link, useNavigate } from "react-router-dom";
+import Dropdown from "../Dropdown/Dropdown";
 import { LuLogOut } from "react-icons/lu";
 
 const Sidebar = () => {
+
+  const navigate = useNavigate();
+
   const [activeDropdown, setActiveDropdown] = useState(null);
   const pageurl = [
     { id: 1, pageurl: "add-blog", pagetext: "Add Blog" },
@@ -12,17 +15,17 @@ const Sidebar = () => {
   ];
 
   const pageurl1 = [
-    { id: 1, pageurl: "add-lekhajokha-data", pagetext: "Add Lekhajokha Data" },
+    { id: 1, pageurl: "add-lekhajokha", pagetext: "Add Lekhajokha Data" },
     {
       id: 2,
-      pageurl: "view-lekhajokha-data",
+      pageurl: "view-lekhajokha",
       pagetext: "View Lekhajokha Data",
     },
   ];
 
   const pageurl2 = [
-    { id: 1, pageurl: "add-data", pagetext: "Add New Data" },
-    { id: 2, pageurl: "view-data", pagetext: "View New Data" },
+    { id: 1, pageurl: "add-query", pagetext: "Add New Query" },
+    { id: 2, pageurl: "view-query", pagetext: "View New Data" },
   ];
   const handleDropdownToggle = (index) => {
     if (activeDropdown === index) {
@@ -31,6 +34,12 @@ const Sidebar = () => {
       setActiveDropdown(index);
     }
   };
+
+  const handleLogout = () => {
+    localStorage.clear();
+    navigate("/login");
+  };
+
   return (
     <>
       <div className="sidebar-parent">
@@ -60,11 +69,13 @@ const Sidebar = () => {
               isOpen={activeDropdown === 2}
               onToggle={handleDropdownToggle}
             />
-            <Link to="/contact" className="contact">Contact Form Data</Link>
+            <Link to="/view-contact" className="contact">
+              Contact Form Data
+            </Link>
           </div>
         </div>
 
-        <div className="logout">
+        <div className="logout" onClick={handleLogout}>
           LogOut
           <div className="icon">
             <LuLogOut />

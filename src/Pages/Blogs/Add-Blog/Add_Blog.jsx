@@ -1,24 +1,108 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import "./Add-blog.scss";
 import MyEditor from "../../../Componant/MyEditor";
+import { toast } from "react-toastify";
+import { useNavigate, useParams } from "react-router-dom";
 
 const Add_Blog = () => {
-  const [title, setTitle] = useState("");
-  const [editorData, setEditorData] = useState("");
-  const [image, setImage] = useState(null);
-  const [date, setDate] = useState("");
-  const [language, setLanguage] = useState("");
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const [data, setData] = useState({
+    title: "",
+    description: "",
+    date: "",
+    category: "",
+    image: "",
+  });
+
+  const [image, setImage] = useState(null);
+
+  const getBlogsById = async (id) => {
+    try {
+      const response = await axios.get(
+        `${import.meta.env.VITE_APP_API_URL}api/blog/getBlogById?id=${id}`
+      );
+
+      if (response?.status === 200) {
+        const blog = response?.data?.response[0];
+
+        setData((prev) => ({
+          ...prev,
+          title: blog?.title,
+          description: blog?.description,
+          date: blog?.date,
+          category: blog?.category,
+          image: blog?.image,
+        }));
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const { id } = useParams();
+
+  useEffect(() => {
+    if (id) {
+      getBlogsById(id);
+    }
+  }, [id]);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log({
-      title,
-      editorData,
-      image,
-      date,
-      language,
-    });
-    // Send data to API
+
+    const formData = new FormData();
+    formData.append("blog", JSON.stringify(data));
+
+    if (image) {
+      formData.append("image", image);
+    }
+
+    try {
+      let response;
+
+      if (id) {
+        // Update blog
+        response = await axios.put(
+          `${import.meta.env.VITE_APP_API_URL}api/blog/update?blogId=${id}`,
+          formData
+        );
+        if (response.status === 200) {
+          toast.success("Blog updated successfully!");
+          navigate("/view-blog");
+        }
+      } else {
+        // Add blog
+        response = await axios.post(
+          `${import.meta.env.VITE_APP_API_URL}/api/blog/add`,
+          formData
+        );
+        if (response.status === 200) {
+          toast.success("Blog added successfully!");
+          navigate("/view-blog");
+        }
+      }
+
+      setData({
+        title: "",
+        description: "",
+        date: "",
+        category: "",
+      });
+    } catch (error) {
+      console.error(
+        "Error submitting blog:",
+        error.response?.data || error.message
+      );
+    }
+  };
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setImage(file);
+    }
   };
 
   return (
@@ -34,12 +118,15 @@ const Add_Blog = () => {
                 <input
                   type="text"
                   placeholder="Enter Blog Title"
-                  value={title}
-                  onChange={(e) => setTitle(e.target.value)}
+                  value={data.title || ""}
+                  onChange={(e) => setData({ ...data, title: e.target.value })}
                 />
               </div>
 
-              <MyEditor value={editorData} onChange={setEditorData} />
+              <MyEditor
+                value={data.description || ""}
+                onChange={(value) => setData({ ...data, description: value })}
+              />
 
               <div className="main-group">
                 <div className="input-group">
@@ -47,34 +134,30 @@ const Add_Blog = () => {
                   <input
                     type="file"
                     accept="image/*"
-                    onChange={(e) =>
-                      setImage(
-                        e.target.files[0]
-                          ? URL.createObjectURL(e.target.files[0])
-                          : null
-                      )
-                    }
+                    onChange={handleImageChange}
                   />
                 </div>
                 <div className="input-group">
                   <label>Select Date</label>
                   <input
                     type="date"
-                    value={date}
-                    onChange={(e) => setDate(e.target.value)}
+                    value={data.date}
+                    onChange={(e) => setData({ ...data, date: e.target.value })}
                   />
                 </div>
                 <div className="input-group">
                   <label htmlFor="language">Select Language</label>
                   <select
-                    id="language"
-                    name="language"
-                    value={language}
-                    onChange={(e) => setLanguage(e.target.value)}
+                    id="category"
+                    name="category"
+                    value={data.category}
+                    onChange={(e) =>
+                      setData({ ...data, category: e.target.value })
+                    }
                   >
-                    <option value="">Select</option>
-                    <option value="english">English</option>
-                    <option value="marathi">Marathi</option>
+                    <option value="">Select Category</option>
+                    <option value="English">English</option>
+                    <option value="Marathi">Marathi</option>
                   </select>
                 </div>
               </div>
@@ -89,34 +172,39 @@ const Add_Blog = () => {
           <div className="right-side">
             <h4>Preview Your Blog</h4>
             <div className="preview-card">
-              {image && (
+              {(image || data.image) && (
                 <img
-                  src={image}
+                  src={
+                    image
+                      ? URL.createObjectURL(image)
+                      : `https://diwise.cloud/spn_images/${data.image}`
+                  }
                   alt="Preview"
-                  style={{ width: "100%", borderRadius: "8px" }}
+                  style={{ width: "20%", borderRadius: "8px" }}
                 />
               )}
-              {(date || language) && (
+
+              {(data.date || data.category) && (
                 <p>
-                  {date && (
+                  {data.date && (
                     <span>
-                      <strong>Date:</strong> {date}
+                      <strong>Date:</strong> {data.date}
                     </span>
                   )}
-                  {language && (
+                  {data.category && (
                     <>
                       {" | "}
                       <span>
-                        <strong>Category:</strong> {language}
+                        <strong>Language:</strong> {data.category}
                       </span>
                     </>
                   )}
                 </p>
               )}
-              {title && <h3>{title}</h3>}
-              {editorData && (
+              {data.title && <h3>{data.title}</h3>}
+              {data.description && (
                 <div
-                  dangerouslySetInnerHTML={{ __html: editorData }}
+                  dangerouslySetInnerHTML={{ __html: data.description }}
                   style={{ margin: "10px 0" }}
                 />
               )}

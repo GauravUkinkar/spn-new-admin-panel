@@ -1,8 +1,6 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext} from "react";
+import "./View_Lekhajokha.scss";
 import TableView from "../../../Componant/table/TableView";
-import { Dropdown, Space } from "antd";
-import { DownOutlined } from "@ant-design/icons";
-import "./view-blog.scss";
 import { UserContext } from "../../../Context";
 import { MdOutlineDelete } from "react-icons/md";
 import { CiEdit } from "react-icons/ci";
@@ -10,10 +8,10 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-const View_blog = () => {
-  const [selectedCategory, setSelectedCategory] = useState("Marathi");
 
-  const { blogs, getViewBlog } = useContext(UserContext);
+const View_Lekhajokha = () => {
+
+  const { lekhajokha } = useContext(UserContext) ;
 
   const navigate = useNavigate();
 
@@ -33,13 +31,14 @@ const View_blog = () => {
       );
       if (response.status === 200) {
         toast.success("Blog deleted successfully!");
-        getViewBlog(selectedCategory);
+        // getViewBlog(selectedCategory);
       }
     } catch (error) {
       console.log(error);
       toast.error("Failed to delete blog.");
     }
   };
+
 
   const columns = [
     {
@@ -49,30 +48,63 @@ const View_blog = () => {
       width: 80,
     },
     {
-      title: "Title",
-      dataIndex: "title",
-      key: "title",
-      width: "auto",
+      title: "Work Name",
+      dataIndex: "work_name",
+      key: "work_name",
     },
     {
-      title: "Date",
-      dataIndex: "date",
-      key: "date",
-      width: "auto",
+      title: "Work Description",
+      dataIndex: "work_desc",
+      key: "work_desc",
     },
     {
-      title: "Category",
-      dataIndex: "category",
-      key: "category",
+      title: "Work Status",
+      dataIndex: "work_status",
+      key: "work_status",
+    },
+    {
+      title: "Start Date",
+      dataIndex: "start_date",
+      key: "start_date",
+    },
+    {
+      title: "End Date",
+      dataIndex: "end_date",
+      key: "end_date",
+    },
+    {
+      title: "Sector Name",
+      dataIndex: "sector_name",
+      key: "sector_name",
+    },
+    {
+      title: "Work Budget",
+      dataIndex: "work_budget",
+      key: "work_budget",
+    },
+    {
+      title: "Village Name",
+      dataIndex: "village_name",
+      key: "village_name",
+    },
+    {
+      title: "Taluka Name",
+      dataIndex: "taluka_name",
+      key: "taluka_name",
+    },
+    {
+      title: "Extra Field",
+      dataIndex: "extra_feild",
+      key: "extra_feild",
     },
     {
       title: "Description",
-      dataIndex: "description",
-      key: "description",
-      render: (text, record) => (
+      dataIndex: "work_desc",
+      key: "work_desc",
+      render: (text) => (
         <div
           dangerouslySetInnerHTML={{
-            __html: record?.description?.slice(0, 100) + "...",
+            __html: text?.slice(0, 100) + "...",
           }}
         />
       ),
@@ -84,7 +116,7 @@ const View_blog = () => {
       render: (image) =>
         image ? (
           <img
-            src={`https://diwise.cloud/spn_images/${image}`}
+            src={`${import.meta.env.VITE_APP_API_URL}${image}`}
             alt="Blog"
             style={{
               width: "80px",
@@ -98,69 +130,48 @@ const View_blog = () => {
         ),
     },
     {
-      title: "Action",
-      key: "action",
-      render: (_, record) => (
-        <>
-          <div class="action-btn-wrap">
-            <CiEdit
-              onClick={() => handleEdit(record.id)}
-              className="edit-icon"
-            />
-
-            <MdOutlineDelete
-              onClick={() => handleDelete(record.id)}
-              className="delete-icon"
-            />
-          </div>
-        </>
-      ),
-    },
+          title: "Action",
+          key: "action",
+          render: (_, record) => (
+            <>
+              <div class="action-btn-wrap">
+                <CiEdit
+                  onClick={() => handleEdit(record.id)}
+                  className="edit-icon"
+                />
+    
+                <MdOutlineDelete
+                  onClick={() => handleDelete(record.id)}
+                  className="delete-icon"
+                />
+              </div>
+            </>
+          ),
+        },
   ];
-
-  const items = [
-    {
-      label: "English",
-      key: "English",
-    },
-    {
-      label: "Marathi",
-      key: "Marathi",
-    },
-  ];
-
-  const handleMenuClick = ({ key }) => {
-    setSelectedCategory(key);
-  };
-
-  useEffect(() => {
-    if (selectedCategory) {
-      getViewBlog(selectedCategory);
-    }
-  }, [selectedCategory]);
 
   return (
-    <>
+    <div>
       <div className=" parent-table-component">
-        <Dropdown
+        {/* <Dropdown
           menu={{ items, onClick: handleMenuClick }}
           trigger={["click"]}
         >
           <a onClick={(e) => e.preventDefault()}>
             <Space>
-              {selectedCategory}
+              
               <DownOutlined />
             </Space>
           </a>
-        </Dropdown>
+        </Dropdown> */}
         <TableView
-          data={blogs?.response}
+          data={lekhajokha}
           columns={columns}
           pagination={{ pageSize: 10 }}
         />
       </div>
-    </>
+    </div>
   );
 };
 
-export default View_blog;
+export default View_Lekhajokha;

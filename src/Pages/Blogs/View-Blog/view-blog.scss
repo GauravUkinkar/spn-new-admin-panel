@@ -1,0 +1,32 @@
+.parent-table-component {
+  width: calc(100% - 300px);
+  margin-left: 300px;
+  padding: 20px;
+
+  .ant-dropdown-trigger {
+    margin-bottom: 20px;
+    display: flex;
+    cursor: pointer;
+    width: 10%;
+  }
+
+  .action-btn-wrap {
+    display: flex;
+    gap: 12px;
+    font-size: 18px;
+
+    .edit-icon {
+      background-color: #edeff1;
+      color: rgb(109, 109, 109);
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .delete-icon {
+      background-color: #fbe1e1;
+      color: rgb(219, 19, 19);
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  }
+}

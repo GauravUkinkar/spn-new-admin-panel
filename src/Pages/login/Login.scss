@@ -1,5 +1,7 @@
 .login-parent {
   height: 100svh;
+  width: calc(100% - 300px);
+  margin-left: 300px;
 
   .login-container {
     display: flex;
@@ -11,7 +13,7 @@
     .login-form {
       width: 40%;
       box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.17);
-      padding: 50px 40px;
+      padding: 50px 20px;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -35,7 +37,7 @@
         border: 1px solid transparent;
         transition: var(--trans);
         background: rgb(245, 245, 245);
-        width: 70%;
+        width: 100%;
         border-radius: 5px;
 
         &:focus {
