@@ -75,7 +75,7 @@ const Add_Blog = () => {
       } else {
         // Add blog
         response = await axios.post(
-          `${import.meta.env.VITE_APP_API_URL}/api/blog/add`,
+          `${import.meta.env.VITE_APP_API_URL}api/blog/add`,
           formData
         );
         if (response.status === 200) {
